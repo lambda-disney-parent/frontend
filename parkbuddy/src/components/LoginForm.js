@@ -5,14 +5,48 @@ import {
     Button,
   } from 'reactstrap';
 import {Link} from 'react-router-dom';
-import './signup.css'
+import './login.css'
+import Axios from 'axios';
 
-class Signup extends Component {
+
+
+class LoginForm extends Component {
+    state={
+        username: '',
+        password: '',
+        accountType: ''
+    }
+
+    componentDidMount(){
+        
+    }
+
+    changeHandler(){
+
+    }
+
+    submitHandler(e){
+        e.preventDefault()
+        axios 
+            .post('https://disney-parent.herokuapp.com/api/auth/register', {
+                username: this.state.username,
+                password: this.state.password,
+                accountType: this.state.accountType
+            })
+            .then(res => {
+                this.setState({
+                    
+
+                })
+            })
+    }
+
     render(){
         return(
-            <Container className="App Sign-up">
-            <h2 className='display-4 h2'>Register</h2>
-            <Form className="form">
+    
+            <Container className="App">
+            <h2 className='display-4 h2'>Sign In</h2>
+            <Form className="form" onSubmit={this.submitHandler}>
                 <Col>
                 <FormGroup>
                     <Label>Username</Label>
@@ -21,6 +55,7 @@ class Signup extends Component {
                     name="username"
                     id="exampleUser"
                     placeholder="Username"
+                    onChange= {this.changeHandler}
                     />
                 </FormGroup>
                 </Col>
@@ -32,6 +67,7 @@ class Signup extends Component {
                     name="password"
                     id="examplePassword"
                     placeholder="********"
+                    onChange= {this.changeHandler}
                     />
                 </FormGroup>
                 </Col>
@@ -42,4 +78,4 @@ class Signup extends Component {
     }
 }
 
-export default Signup
+export default LoginForm;
