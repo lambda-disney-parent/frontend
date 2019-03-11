@@ -4,9 +4,8 @@ import {
     FormGroup, Label, Input,
     Button,
   } from 'reactstrap';
-import {Link} from 'react-router-dom';
 import './login.css'
-import Axios from 'axios';
+import axios from 'axios';
 
 
 
@@ -34,10 +33,8 @@ class LoginForm extends Component {
                 accountType: this.state.accountType
             })
             .then(res => {
-                this.setState({
-                    
-
-                })
+                console.log(res)
+                // localStorage.setItem('token', res.token)
             })
     }
 
@@ -71,7 +68,7 @@ class LoginForm extends Component {
                     />
                 </FormGroup>
                 </Col>
-                <Link to='/'><Button className='btn btn-primary btn-lg'>Submit</Button></Link>
+                <Button className='btn btn-primary btn-lg'>Submit</Button>
             </Form>
             </Container>
         )

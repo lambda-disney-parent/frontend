@@ -6,9 +6,8 @@ import Signup from './Signup'
 
   class Login extends Component {
     state={
-        loginForm:true,
-        loggedIn: false
-    }
+        loginForm:true
+          }
 
 
     toggle = () => {

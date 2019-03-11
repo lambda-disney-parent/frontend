@@ -9,9 +9,9 @@ class Jumbotron extends Component {
             <div class="jumbotron">
                 <h1 class="display-4">Theme Park Buddy</h1>
                 {this.props.login === true ? 
-                    <Link to='/Signup/'><Button onClick={this.props.toggle} className="btn btn-lg btn-red">Sign Up</Button></Link>
-            :
-                    <Link exact to='/'><Button onClick={this.props.toggle} className="btn btn-lg btn-red">Sign In</Button></Link>}
+                    (<Link to='/Signup/'><Button onClick={this.props.toggle} className="btn btn-lg btn-red">Sign Up</Button></Link>)
+                        :
+                    (<Link exact to='/'><Button onClick={this.props.toggle} className="btn btn-lg btn-red">Sign In</Button></Link>)}
             </ div>
         
             
