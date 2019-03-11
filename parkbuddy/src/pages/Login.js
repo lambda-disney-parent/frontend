@@ -5,24 +5,27 @@ import Signup from './Signup'
 
 
   class Login extends Component {
-    state={
+    constructor(props){
+      super(props)
+    this.state={
         loginForm:true
           }
-
-
+    }
     toggle = () => {
       this.setState({
         loginForm:!this.state.loginForm
       })
     }
     render() {
+      console.log(this.props.history)
       return (
         <div>
           <Jumbotron toggle={this.toggle} login={this.state.loginForm}/>
-          {this.state.loginForm === true ?  <LoginForm /> : <Signup />}
+          {this.state.loginForm === true ?  <LoginForm history={this.props.history}/> : <Signup toggle={this.toggle}/>}
         </div>
       );
     }
   }
+
 
   export default Login

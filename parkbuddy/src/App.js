@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Login from './pages/Login';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {Users, Posts, Profile} from './pages/Profile'
+import {Route} from 'react-router-dom';
+import {Users, Posts, Profile, Signup} from './pages/Profile'
 
 
 class App extends Component {
@@ -16,6 +16,7 @@ class App extends Component {
       <div>
         <Login />
         <Route exact path='/'component={Login}/>
+        <Route path='/Signup'component={Signup}/>
         <Route path='/Profile'component={Profile}/>
         <Route path='/Users'component={Users}/>
         <Route path='/Posts'component={Posts}/>

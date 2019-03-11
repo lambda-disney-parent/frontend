@@ -20,30 +20,37 @@ class LoginForm extends Component {
         
     }
 
-    changeHandler(){
-
+    changeHandler = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     submitHandler(e){
         e.preventDefault()
         axios 
-            .post('https://disney-parent.herokuapp.com/api/auth/register', {
+            .post('https://disney-parent.herokuapp.com/api/auth/login', {
                 username: this.state.username,
-                password: this.state.password,
-                accountType: this.state.accountType
+                password: this.state.password
             })
             .then(res => {
                 console.log(res)
-                // localStorage.setItem('token', res.token)
+                const token = res.data.token
+                localStorage.setItem('token', token)
+                console.log(token)
+                axios
+                    .get('https://disney-parent.herokuapp.com/api/users', {headers: {Authorization: token}} )
+                    .then(res => this.props.history.push('/Profile'))
             })
     }
+
 
     render(){
         return(
     
             <Container className="App">
             <h2 className='display-4 h2'>Sign In</h2>
-            <Form className="form" onSubmit={this.submitHandler}>
+            <Form className="form" onSubmit={(e) => this.submitHandler(e)}>
                 <Col>
                 <FormGroup>
                     <Label>Username</Label>

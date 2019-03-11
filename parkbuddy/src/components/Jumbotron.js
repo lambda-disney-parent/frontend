@@ -6,8 +6,8 @@ import {Link} from 'react-router-dom'
 class Jumbotron extends Component {
     render(){
         return(
-            <div class="jumbotron">
-                <h1 class="display-4">Theme Park Buddy</h1>
+            <div className="jumbotron">
+                <h1 className="display-4">Theme Park Buddy</h1>
                 {this.props.login === true ? 
                     (<Link to='/Signup/'><Button onClick={this.props.toggle} className="btn btn-lg btn-red">Sign Up</Button></Link>)
                         :
