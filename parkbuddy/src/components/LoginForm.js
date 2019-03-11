@@ -6,6 +6,7 @@ import {
   } from 'reactstrap';
 import './login.css'
 import axios from 'axios';
+import {withRouter} from 'react-router-dom';
 
 
 
@@ -16,9 +17,6 @@ class LoginForm extends Component {
         accountType: ''
     }
 
-    componentDidMount(){
-        
-    }
 
     changeHandler = e => {
         this.setState({
@@ -40,14 +38,16 @@ class LoginForm extends Component {
                 console.log(token)
                 axios
                     .get('https://disney-parent.herokuapp.com/api/users', {headers: {Authorization: token}} )
-                    .then(res => this.props.history.push('/Profile'))
+                    .then(res => {
+                        console.log(res); 
+                        this.props.history.push('/Profile')}
+                        )
             })
     }
 
 
     render(){
         return(
-    
             <Container className="App">
             <h2 className='display-4 h2'>Sign In</h2>
             <Form className="form" onSubmit={(e) => this.submitHandler(e)}>
@@ -82,4 +82,4 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

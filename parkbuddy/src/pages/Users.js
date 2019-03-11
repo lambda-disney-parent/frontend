@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import Profile from './Profile'
 
 
 export default class Users extends Component {
@@ -25,9 +26,9 @@ componentDidMount() {
   render(){
       return(
           <div>
-              {this.state.user.map(user=> {
-                <Profile user={user}/>
-              })}
+              this.state.user.map(user=> {
+                <Profile user={this.state.user}/>
+              })
           </div>
       )
   }

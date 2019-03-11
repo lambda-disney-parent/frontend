@@ -17,7 +17,6 @@ import Signup from './Signup'
       })
     }
     render() {
-      console.log(this.props.history)
       return (
         <div>
           <Jumbotron toggle={this.toggle} login={this.state.loginForm}/>
