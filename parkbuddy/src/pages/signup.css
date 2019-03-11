@@ -1,0 +1,43 @@
+.App{
+    padding: 40px;
+    text-align:center;
+}
+
+.Sign-up{
+    background-color: aquamarine;
+}
+.form{
+    margin: 20px;
+    
+}
+
+.h2{
+    font-size: 2rem;
+    padding: 10px;
+}
+
+@media (min-width: 576px){
+    .container{
+        max-width: 100%;
+    }
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #2C1CFF;
+    border-color: #007bff;
+    margin-top: 15px;
+}
+
+.btn-primary:hover{
+    background-color:#0056b3
+}
+
+input{
+    text-align:center;
+}
+
+.form-group{
+    padding-left:18%;
+    padding-right:18%;
+}
