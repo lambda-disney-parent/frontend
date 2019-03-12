@@ -1,34 +1,43 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Profile from './Profile'
+import User from './User';
+import NavBar from '../components/NavBar'
+import PageHeader from '../components/PageHeader'
+
 
 
 export default class Users extends Component {
-
-    state= {
-        user: []
+    constructor(props){
+        super(props)
+    this.state= {
+        users: []
+    }
     }
 
-componentDidMount() {
-    this.getUsers(`https://disney-parent.herokuapp.com/api/users`)
-  }
-
-  getUsers = URL => {
+    componentDidMount() {
+        this.getUsers()
+    }
+    
+  getUsers = () => {
+      const token = localStorage.getItem('token')
     axios
-      .get(URL)
+      .get('https://disney-parent.herokuapp.com/api/users', {headers: {Authorization: token}})
       .then(res=> 
-        this.setState({
-            user: res.data
+        this.setState({      
+            users: res.data.users
         }))
+      
         .catch(err=> console.log(err))
   }
 
   render(){
       return(
           <div>
-              this.state.user.map(user=> {
-                <Profile user={this.state.user}/>
-              })
+                <NavBar />
+                <PageHeader />
+                {this.state.users.map(user=>  
+                    <User user={user} key={user.id}/>)
+                }
           </div>
       )
   }

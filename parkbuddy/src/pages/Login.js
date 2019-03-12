@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LoginForm from '../components/LoginForm'
-import Jumbotron from '../components/Jumbotron'
+import Jumbotron1 from '../components/Jumbotron1'
 import Signup from './Signup'
 
 
@@ -8,7 +8,8 @@ import Signup from './Signup'
     constructor(props){
       super(props)
     this.state={
-        loginForm:true
+        loginForm:true,
+        visible: true
           }
     }
     toggle = () => {
@@ -19,8 +20,8 @@ import Signup from './Signup'
     render() {
       return (
         <div>
-          <Jumbotron toggle={this.toggle} login={this.state.loginForm}/>
-          {this.state.loginForm === true ?  <LoginForm history={this.props.history}/> : <Signup toggle={this.toggle}/>}
+          <Jumbotron1 toggle={this.toggle} loginForm={this.state.loginForm}/>
+          {this.state.loginForm ?  <LoginForm history={this.props.history}/> : <Signup toggle={this.toggle}/>}
         </div>
       );
     }

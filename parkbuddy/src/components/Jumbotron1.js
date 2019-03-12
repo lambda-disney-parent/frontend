@@ -5,13 +5,17 @@ import {Button} from 'reactstrap';
 class Jumbotron extends Component {
     render(){
         return(
+            
             <div className="jumbotron">
+            <Jumbotron>
                 <h1 className="display-4">Theme Park Buddy</h1>
-                {this.props.login === true ? 
+                {this.props.loginForm ? 
                     <Button onClick={this.props.toggle} className="btn btn-lg btn-red">Sign Up</Button>
                         :
                     <Button onClick={this.props.toggle} className="btn btn-lg btn-red">Sign In</Button>}
+            </Jumbotron>
             </ div>
+            
         
             
         )

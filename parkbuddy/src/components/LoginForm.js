@@ -11,11 +11,14 @@ import {withRouter} from 'react-router-dom';
 
 
 class LoginForm extends Component {
-    state={
+    constructor(props){
+        super(props);
+    this.state={
         username: '',
         password: '',
         accountType: ''
     }
+}
 
 
     changeHandler = e => {
@@ -36,12 +39,14 @@ class LoginForm extends Component {
                 const token = res.data.token
                 localStorage.setItem('token', token)
                 console.log(token)
+                this.props.history.push('/Posts')
                 axios
                     .get('https://disney-parent.herokuapp.com/api/users', {headers: {Authorization: token}} )
                     .then(res => {
                         console.log(res); 
-                        this.props.history.push('/Profile')}
+                        }
                         )
+                    .catch(err=> console.log(err))
             })
     }
 

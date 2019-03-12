@@ -1,13 +1,68 @@
 import React, {Component} from 'react';
+import axios from 'axios';
+import Post from './Post';
+import NavBar from '../components/NavBar';
+import PageHeader from '../components/PageHeader'
 
-class Posts extends Component {
-render(){
-    return(
-        <div>
 
-        </div>
-    )
+export default class Posts extends Component {
+    constructor(props){
+        super(props)
+    this.state= {
+        posts: [],
+        users: []
+    }
+    }
+
+    componentDidMount(){
+        this.getPosts();
+        this.getUsers();
+    }
+    
+  getPosts = () => {
+      const token = localStorage.getItem('token')
+    axios
+      .get('https://disney-parent.herokuapp.com/api/posts', {headers: {Authorization: token}})
+      .then(res=> 
+        {console.log(res.data)
+        this.setState({      
+            posts: res.data
+        })
+        console.log(this.state.posts)
+    })
+        .catch(err=> console.log(err))
+  }
+
+  getUsers = () => {
+    const token = localStorage.getItem('token')
+  axios
+    .get('https://disney-parent.herokuapp.com/api/users', {headers: {Authorization: token}})
+    .then(res=> 
+      {console.log(res.data)
+      this.setState({      
+          users: res.data
+      })
+      console.log(this.state.users)
+  })
+      .catch(err=> console.log(err))
 }
-}
 
-export default Posts;
+  logout = () => {
+      localStorage.clear();
+      window.location.reload()
+  }
+
+  render(){
+      return(
+          <div>
+              <NavBar />
+              <PageHeader />
+              {/* <Button onClick={this.logout}>Sign Out</Button> */}
+              {this.state.posts.map(post=>
+                <Post post={post} key={post.id}/>
+              )}
+          </div>
+      )
+  }
+
+}

@@ -1,0 +1,16 @@
+.red{
+    background-color:#ff1212;
+    border-color:#ff1212
+}
+
+.red:hover{
+    background-color:#d00404
+}
+
+.light-blue{
+    background-color: rgb(41, 41, 255);
+}
+
+p, h1{
+    color:rgba(255, 255, 255, 0.886);
+}
