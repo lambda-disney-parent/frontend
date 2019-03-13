@@ -1,0 +1,19 @@
+.bold{
+    padding: 5px;
+}
+
+.wrap{
+    padding-left:120px;
+    padding-right:120px;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+.strong{
+    font-weight: bold;
+    font-size: 20px
+}
+
+.shadow{
+    box-shadow: 5px 10px;
+}
