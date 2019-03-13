@@ -15,8 +15,7 @@ class LoginForm extends Component {
         super(props);
     this.state={
         username: '',
-        password: '',
-        accountType: ''
+        password: ''
     }
 }
 
@@ -36,8 +35,10 @@ class LoginForm extends Component {
             })
             .then(res => {
                 console.log(res)
-                const token = res.data.token
+                const {token, username, userId} = res.data
                 localStorage.setItem('token', token)
+                localStorage.setItem('username', username)
+                localStorage.setItem('userId', userId)
                 console.log(token)
                 this.props.history.push('/Posts')
                 axios

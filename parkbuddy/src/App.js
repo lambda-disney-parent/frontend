@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom';
 import Posts from './pages/Posts';
 import Auth from './components/Auth';
 import Home from './pages/Home';
-import Profile from './pages/Profile';
+import RequestForm from './pages/RequestForm';
 
 
 
@@ -35,7 +35,7 @@ class App extends Component {
         <Route path ='/login' component ={Login}></Route>
         <Auth>
         <Route path ='/posts' component ={Posts}></Route>
-        <Route path ='/profile' component={Profile}></Route>
+        <Route path ='/request' component={RequestForm}></Route>
         </Auth>
       </Switch>
     );

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {Jumbotron, Button} from 'reactstrap';
-import './pageheader.css'
-
+import './pageheader.css';
+import {Link} from 'react-router-dom'
+ 
 export default class PageHeader extends Component {
   render() {
     return (
@@ -11,7 +12,7 @@ export default class PageHeader extends Component {
         <p className="lead white">The app that lets YOU enjoy your vacation TOO</p>
         <p>We watch. While you ride.</p>
         <p className="lead white">
-          <Button className="red" color="primary">Learn More</Button>
+          <Link to='/request'><Button className="red" color="primary">Add a Request</Button></Link>
         </p>
       </Jumbotron>
       </div>
