@@ -23,6 +23,10 @@ export default class Example extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  logout(){
+    localStorage.clear()
+  }
   render() {
     return (
       <div>
@@ -37,10 +41,10 @@ export default class Example extends Component {
                 <NavLink href="/Posts/">Posts</NavLink>
               </NavItem>
               <NavItem className='nav-item'>
-                <NavLink href="/users/">Users</NavLink>
+                <NavLink href="/request">Request Form</NavLink>
               </NavItem>
               <NavItem className='nav-item'>
-                <NavLink href="/users/:id">Profile</NavLink>
+                <NavLink href="/" onClick={this.logout}>Logout</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

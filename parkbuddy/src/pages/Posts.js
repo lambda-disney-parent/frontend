@@ -11,7 +11,7 @@ export default class Posts extends Component {
     this.state= {
         posts: [],
         users: []
-    }
+        }
     }
 
     componentDidMount(){
@@ -45,6 +45,22 @@ export default class Posts extends Component {
       console.log(this.state.users)
   })
       .catch(err=> console.log(err))
+}
+
+
+
+
+
+updatePost = (e, item) => {
+    axios
+    .put('https://disney-parent.herokuapp.com/api/posts', item)
+    .then(res=> {
+        this.setState({
+            posts: res.data
+        })
+        this.props.history.push('./posts')
+    })
+    .catch(err=> console.log(err))
 }
 
   logout = () => {

@@ -17,3 +17,21 @@
 .shadow{
     box-shadow: 5px 10px;
 }
+
+.padding{
+    margin-top: 20px;
+    width: 100%;
+    background-color: blue;
+}
+
+.padding:hover{
+    background-color: rgb(23, 23, 186);
+}
+
+.center{
+    text-align:center
+}
+
+input{
+    margin-top:20px;
+}
