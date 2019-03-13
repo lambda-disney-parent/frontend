@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './jumbotron.css';
-import {Button} from 'reactstrap';
+import {Button, Jumbotron} from 'reactstrap';
 
-class Jumbotron extends Component {
+class Jumbotron1 extends Component {
     render(){
         return(
             
@@ -22,4 +22,4 @@ class Jumbotron extends Component {
     }
 }
 
-export default Jumbotron
+export default Jumbotron1

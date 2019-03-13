@@ -57,7 +57,6 @@ export default class Posts extends Component {
           <div>
               <NavBar />
               <PageHeader />
-              {/* <Button onClick={this.logout}>Sign Out</Button> */}
               {this.state.posts.map(post=>
                 <Post post={post} key={post.id}/>
               )}

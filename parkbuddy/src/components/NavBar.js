@@ -40,7 +40,7 @@ export default class Example extends Component {
                 <NavLink href="/users/">Users</NavLink>
               </NavItem>
               <NavItem className='nav-item'>
-                <NavLink href="/user/">Profile</NavLink>
+                <NavLink href="/users/:id">Profile</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

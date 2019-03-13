@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import User from './User';
 import NavBar from '../components/NavBar'
-import PageHeader from '../components/PageHeader'
-
 
 
 export default class Users extends Component {
@@ -34,10 +31,12 @@ export default class Users extends Component {
       return(
           <div>
                 <NavBar />
-                <PageHeader />
-                {this.state.users.map(user=>  
-                    <User user={user} key={user.id}/>)
-                }
+                <div>
+                    {/* {this.state.users.filter(user=> 
+                    user.id===this.state.users.currentUser ? <User user={user} /> : null )} */}
+                     
+                </div>
+
           </div>
       )
   }
