@@ -13,26 +13,43 @@ export default class Post extends Component {
       }
     }
   
+
+
+  handleChange = e => {
+      this.setState({
+          [e.target.name]:e.target.value
+      })
+  }
+
   addComment = (comment) => {
+    const token = localStorage.getItem('token')
     axios 
-        .post('https://disney-parent.herokuapp.com/api/posts/comment', comment)
+        .post('https://disney-parent.herokuapp.com/api/posts/comment', comment,  {headers: {Authorization: token}})
         .then(res => {
             console.log(res)
         })
         .catch(err=> console.log(err))
   }
 
-    handleChange = e => {
-      this.setState({
-          [e.target.name]:e.target.value
-      })
+  updateComment = (comment, id) => {
+    const token = localStorage.getItem('token')
+    axios 
+        .put(`https://disney-parent.herokuapp.com/api/posts/comment/${id}`, comment,  {headers: {Authorization: token}})
+        .then(res => {
+            this.setState({
+              comment: this.state.comment,
+              repliedBy: this.state.repliedBy
+            })
+        })
+        .catch(err=> console.log(err))
   }
 
 
 deletePost = (e, id) => {
   e.preventDefault();
+  const token = localStorage.getItem('token')
   axios
-      .delete(`https://disney-parent.herokuapp.com/api/posts/${id}`)
+      .delete(`https://disney-parent.herokuapp.com/api/posts/${id}`,  {headers: {Authorization: token}})
       .then(res=> {
         window.location.reload();
           console.log(res)
@@ -61,8 +78,8 @@ render(){
                     <Input name='comment' value={this.state.comment} onChange={this.handleChange} placeholder= 'Add a comment...'></Input>
                   </Form>
                   <div>
-                    {this.props.post.comments.map(comment=>
-                    <p>{comment.comment}</p>)}
+                    {/* {this.props.post.comments.map(comment=>
+                    <p>{comment.comment}</p>)} */}
                   </div>
                 </CardBody>
                    {this.props.id === thisId ? <Button onClick={(e) => this.deletePost(e, this.props.post.id)}>Delete Post</Button> : null}
