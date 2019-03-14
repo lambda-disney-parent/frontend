@@ -99,7 +99,7 @@ render(){
               <Card className="shadow border">
                 <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                 <CardBody>
-                  <CardTitle className="strong">Username: {this.props.users} </CardTitle>          
+                  <CardTitle className="strong">Username: {this.props.post.postedBy} </CardTitle>          
                   <CardSubtitle className='bold'><strong>Date:</strong> {this.props.post.time}</CardSubtitle>
                   <CardSubtitle className='bold'><strong>Title:</strong> {this.props.post.title}</CardSubtitle>
                   <CardSubtitle className='bold'><strong>Meeting Place:</strong> We are located at {this.props.post.meetingPlace} with      {this.props.post.numOfKids} children
