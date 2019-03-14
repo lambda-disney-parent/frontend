@@ -21,6 +21,7 @@ export default class Post extends Component {
       comment: "",
       repliedBy: "",
       post_id: "",
+      //added these variables
       isOpen: false,
       editComment: ""
     };
@@ -72,27 +73,26 @@ export default class Post extends Component {
       .put(
         `https://disney-parent.herokuapp.com/api/posts/comment/${id}`,
         { comment: comment },
-        { headers: { Authorization: token } }
+
       )
       .then(res => {
         this.props.getPosts();
+        { headers: { Authorization: token } }
+        this.setState({
+          editComment: ""
+        });
       })
       .catch(err => console.log(err));
   };
   
-  // still take in the event as a param
+  // refactored function as example
   deleteComment = e => {
-    // e.preventDefault(); not needed
     const token = localStorage.getItem("token");
-    // this comment.id is stored on the name instead of passed into the function
     const id = e.target.name;
     axios
-      // store the url in a const variable to make code cleaner
       .delete(`${this.POST_URL}/comment/${id}`, {
         headers: { Authorization: token }
       })
-      // call this function to get the posts and refresh the Posts 
-      // reduce code by removing brackets
       .then(res => this.props.getPosts())
       .catch(err => console.log(err));
   };
@@ -110,7 +110,6 @@ export default class Post extends Component {
       .catch(err => console.log(err));
   };
 
-  //changed function for flexibility with state
   submitHandler = e => {
     e.preventDefault();
     this.addComment(this.state);
@@ -146,25 +145,25 @@ export default class Post extends Component {
                 <CardSubtitle>
                   {this.props.post.comment &&
                     this.props.post.comment.map(comment => {
-                      console.log("STATE", this.state)
-                      console.log("COMMENT", comment)
                       return (
                         <div key={comment.id}>
                           <CardSubtitle>
                             <strong>Comment:</strong>
                             {comment.comment}
                           </CardSubtitle>
+                          {/* check to see if the value on the state is equal to the current comment in the map method */}
                           {this.state.isOpen === comment.id ?
-                            <span><Input
+                            // if so, render this input form that submits text input to the updateComment function
+                            <div><Input
                               name="editComment"
                               value={this.state.editComment}
                               onChange={this.handleChange}
-                            >Testing</Input><Button onClick={() => this.updateComment(this.state.editComment, comment.id)}>Submit</Button></span> :
+                            >Testing</Input><Button onClick={() => this.updateComment(this.state.editComment, comment.id)}>Submit</Button></div> :
+                            // else display the Delete and Edit buttons
                             <>
                               {comment.repliedBy === username ? (
                                 <Button
                                   name={comment.id}
-                                  // written without an arrow func, it auto passes event to the function
                                   onClick={this.deleteComment}
                                 >
                                   Delete
@@ -173,6 +172,7 @@ export default class Post extends Component {
                               {comment.repliedBy === username ? (
                                 <Button
                                   onClick={() =>
+                                    // this button gives the current comment's id to this.state.isOpen
                                     this.handleUpdate(comment.id)
                                   }
                                 >

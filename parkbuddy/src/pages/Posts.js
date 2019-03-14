@@ -25,11 +25,9 @@ export default class Posts extends Component {
         headers: { Authorization: token }
       })
       .then(res => {
-        // console.log(res.data)
         this.setState({
           posts: res.data
         });
-        // console.log(this.state.posts)
       })
       .catch(err => console.log(err));
   };
@@ -41,11 +39,9 @@ export default class Posts extends Component {
         headers: { Authorization: token }
       })
       .then(res => {
-        //   console.log(res.data)
         this.setState({
           users: res.data
         });
-        //   console.log(this.state.users)
       })
       .catch(err => console.log(err));
   };
