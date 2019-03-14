@@ -69,7 +69,7 @@ export default class Posts extends Component {
           <div>
               <NavBar />
               <PageHeader />
-              {this.state.posts.map(post=>
+              {this.state.posts.map((post)=>
                 <Post post={post} key={post.id} getPosts={this.getPosts}/>
               )}
           </div>

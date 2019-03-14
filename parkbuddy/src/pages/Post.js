@@ -48,8 +48,9 @@ export default class Post extends Component {
 
   updateComment = (comment, id) => {
     const token = localStorage.getItem('token')
+    console.log(id, 55)
     axios 
-        .put(`https://disney-parent.herokuapp.com/api/posts/comment/${id}`, comment,  {headers: {Authorization: token}})
+        .put(`https://disney-parent.herokuapp.com/api/posts/comment/${id}`, {comment},  {headers: {Authorization: token}})
         .then(res => {
             this.props.getPosts()
         })
@@ -109,11 +110,12 @@ render(){
                        {this.props.post.comment && this.props.post.comment.map(comment=> {
                          
                           return(
-                            <div>
-                        <CardSubtitle><strong>Comment:</strong>{comment.comment}</CardSubtitle>
-                        
-                            {comment.repliedBy === username ? <Button onClick={(e) => this.deleteComment(e, comment.id)}>Delete</Button> : null}
-                            {comment.repliedBy === username ? <Button onClick={(e) => this.updateComment(e, comment.id)}>Edit </Button> : null}
+                            <div key={comment.id}>
+                        <CardSubtitle ><strong>Comment:</strong>{comment.comment}</CardSubtitle>
+                            
+                            ({comment.repliedBy === username ? <Button onClick={(e) => this.deleteComment(e, comment.id)}>Delete</Button> : null}
+                            {comment.repliedBy === username ? <Button onClick={() => this.updateComment("hello world", comment.id)}>Edit </Button> : null})
+                            
                             </div>
                           )
                       }
