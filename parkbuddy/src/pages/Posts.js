@@ -45,23 +45,19 @@ export default class Posts extends Component {
       console.log(this.state.users)
   })
       .catch(err=> console.log(err))
-}
+    }
 
-
-
-
-
-updatePost = (e, item) => {
-    axios
-    .put('https://disney-parent.herokuapp.com/api/posts', item)
-    .then(res=> {
-        this.setState({
-            posts: res.data
+    updatePost = (post) => {
+        axios
+        .put('https://disney-parent.herokuapp.com/api/posts', post)
+        .then(res=> {
+            this.setState({
+                posts: res.data
+            })
+            this.props.history.push('./posts')
         })
-        this.props.history.push('./posts')
-    })
-    .catch(err=> console.log(err))
-}
+        .catch(err=> console.log(err))
+    }
 
   logout = () => {
       localStorage.clear();
@@ -74,10 +70,9 @@ updatePost = (e, item) => {
               <NavBar />
               <PageHeader />
               {this.state.posts.map(post=>
-                <Post post={post} key={post.id}/>
+                <Post post={post} key={post.id} getPosts={this.getPosts}/>
               )}
           </div>
       )
   }
-
 }
