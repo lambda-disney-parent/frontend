@@ -1,0 +1,9 @@
+.center{
+    text-align:center;
+    align-items: flex-end;
+}
+
+.spaced{
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
