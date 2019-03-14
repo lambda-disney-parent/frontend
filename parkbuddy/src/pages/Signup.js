@@ -34,8 +34,8 @@ class Signup extends Component {
                 accountType: this.state.accountType
             })
             .then(res => {
+                this.props.toggle();
                 console.log(res)
-                // localStorage.setItem('token', res.token)
             })
             .catch(err=> console.log(err))
     }
@@ -43,7 +43,7 @@ class Signup extends Component {
         return(
             <Container className="App Sign-up">
             <h2 className='display-4 h2'>Register</h2>
-            <Form className="form">
+            <Form className="form" onSubmit={(e) => this.submitHandler(e)}>
                 <Col>
                 <FormGroup>
                     <Label>Username</Label>
@@ -68,7 +68,7 @@ class Signup extends Component {
                     />
                 </FormGroup>
                 </Col>
-                <Button onSubmit={() => this.submitHandler} className='btn btn-primary btn-lg'>Submit</Button>
+                <Button className='btn btn-primary btn-lg'>Submit</Button>
             </Form>
             </Container>
         )
