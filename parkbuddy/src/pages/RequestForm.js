@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar'
-import PostComponent from '../components/FormComponent';
+import PostComponent from '../components/PostComponent';
 import {Jumbotron, Container} from 'reactstrap'
 
 
@@ -14,22 +14,22 @@ export default class Profile extends Component {
     }
     }
 
-    componentDidMount() {
-    }
+    // componentDidMount() {
+    // }
     
 
-    addPost = (e, post) => {
-        e.preventDefault();
-        axios
-            .post('https://disney-parent.herokuapp.com/api/posts', post)
-            .then(res=> {
-                this.setState({
-                    posts: res.data
-                })
-                this.props.history.push('./posts')
-            })
-            .catch(err=> console.log(err))
-    }
+    // addPost = (e, post) => {
+    //     e.preventDefault();
+    //     axios
+    //         .post('https://disney-parent.herokuapp.com/api/posts', post)
+    //         .then(res=> {
+    //             this.setState({
+    //                 posts: res.data
+    //             })
+    //             this.props.history.push('./posts')
+    //         })
+    //         .catch(err=> console.log(err))
+    // }
 
  
     

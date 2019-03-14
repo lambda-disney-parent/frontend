@@ -6,9 +6,11 @@ import Posts from './pages/Posts';
 import Auth from './components/Auth';
 import Home from './pages/Home';
 import RequestForm from './pages/RequestForm';
+import axios from 'axios'
 
 
 
+axios.defaults.withCredentials = true;
 
 class App extends Component {
   state={
