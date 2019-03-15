@@ -8,8 +8,11 @@
 }
 
 .smaller{
+    text-align:center;
+    padding: 2px;
     justify-content:center;
-    width: 100px
+    width: 50px;
+    font-size: 10px
 }
 
 .wrap{
@@ -70,6 +73,19 @@ input{
 
 .light-blue{
     background-color: rgb(41, 41, 255);
+}
+
+.displayFlex{
+    display:flex;
+    width: 100%;
+}
+
+.leftButton{
+    width:50%;
+}
+
+.rightButton{
+    width:50%;
 }
 
 /* .teal{
