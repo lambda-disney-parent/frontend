@@ -51,8 +51,9 @@ componentDidMount(){
     e.preventDefault()
   const token = localStorage.getItem('token')
     axios
-      .put(`https://disney-parent.herokuapp.com/api/posts/${id}`, {headers: {Authorization:token}})
+      .put(`https://disney-parent.herokuapp.com/api/posts/${id}`, {user_id: this.state.user_id, title: this.state.title, meetingPlace: this.state.meetingPlace, time: this.state.time, numOfKids: this.state.numOfKids }, {headers: {Authorization:token}})
       .then(res=> {
+        // this.props.history.push('./posts');
         this.setState({
           title: this.state.title,
           time: this.state.time,
@@ -75,7 +76,11 @@ componentDidMount(){
   submitHandler = e => {
     e.preventDefault();
     console.log(this.props.match.params.id, 6667777);
-    this.state.isEditing ? this.addPost(this.state) : this.updatePost(e, this.props.match.params.id)
+    this.state.isEditing ? this.addPost({user_id: +localStorage.getItem("userId"),
+    title: this.state.title,
+    time: this.state.time,
+    meetingPlace: this.state.meetingPlace,
+    numOfKids: this.state.numOfKids}) : this.updatePost(e, this.props.match.params.id)
     this.props.history.push('./posts')
   };
 
