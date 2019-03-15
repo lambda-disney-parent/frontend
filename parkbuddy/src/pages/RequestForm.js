@@ -14,23 +14,6 @@ export default class Profile extends Component {
     }
     }
 
-    // componentDidMount() {
-    // }
-    
-
-    // addPost = (e, post) => {
-    //     e.preventDefault();
-    //     axios
-    //         .post('https://disney-parent.herokuapp.com/api/posts', post)
-    //         .then(res=> {
-    //             this.setState({
-    //                 posts: res.data
-    //             })
-    //             this.props.history.push('./posts')
-    //         })
-    //         .catch(err=> console.log(err))
-    // }
-
  
     
   render(){

@@ -32,7 +32,8 @@ class App extends Component {
         <Route path ='/login' component ={Login}></Route>
         <Auth>
         <Route path ='/posts' component ={Posts}></Route>
-        <Route path ='/request' component={RequestForm}></Route>
+        <Route exact path ='/request' component={RequestForm}></Route>
+        <Route path='/request/:id' component={RequestForm}></Route>
         </Auth>
       </Switch>
     );

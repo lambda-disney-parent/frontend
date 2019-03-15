@@ -3,7 +3,6 @@ import { Button, Form, FormGroup, Label, Input, Container } from "reactstrap";
 import "./postcomponent.css";
 import axios from "axios";
 import {withRouter} from 'react-router-dom'
-import Post from "../pages/Post";
 
 class PostComponent extends React.Component {
   state = {
@@ -11,9 +10,27 @@ class PostComponent extends React.Component {
     title: "",
     time: "",
     meetingPlace: "",
-    numOfKids: 1
+    numOfKids: 1,
+    isEditing:true
   };
 //
+componentDidMount(){
+  const id= this.props.match.params.id
+  if(id){
+    axios
+      .get(`https://disney-parent.herokuapp.com/api/posts/${id}`)
+      .then(res=> {
+        console.log(res)
+        this.setState({
+          isEditing: false,
+          title: res.data.title,
+          time: res.data.time,
+          meetingPlace: res.data.meetingPlace,
+          numOfKids: res.data.numOfKids
+        })
+      })
+  }
+}
 
   addPost = post => {
     const token = localStorage.getItem("token");
@@ -30,20 +47,20 @@ class PostComponent extends React.Component {
       .catch(err => console.log(err));
   };
 
-  // updatePost = (e, id) => {
-  //   e.preventDefault();
-  // const token = localStorage.getItem('token')
-  //   axios
-  //     .put(`https://disney-parent.herokuapp.com/api/posts/${id}` , {headers: {Authorization: token}})
-  //     .then(res=> {
-  //       this.setState({
-  //         title: this.props.state.title,
-  //         time: this.props.state.time,
-  //         meetingPlace: this.props.state.meetingPlace
-  //         numOfKids: this.props.state.numOfKids
-  //       })
-  //     })
-  // }
+  updatePost = (e, id ) => {
+    e.preventDefault()
+  const token = localStorage.getItem('token')
+    axios
+      .put(`https://disney-parent.herokuapp.com/api/posts/${id}`, {headers: {Authorization:token}})
+      .then(res=> {
+        this.setState({
+          title: this.state.title,
+          time: this.state.time,
+          meetingPlace: this.state.meetingPlace,
+          numOfKids: this.state.numOfKids
+        })
+      })
+  }
 
   changeHandler = e => {
     console.log(this.state);
@@ -57,8 +74,8 @@ class PostComponent extends React.Component {
 
   submitHandler = e => {
     e.preventDefault();
-    console.log(this.state);
-    this.addPost(this.state);
+    console.log(this.props.match.params.id, 6667777);
+    this.state.isEditing ? this.addPost(this.state) : this.updatePost(e, this.props.match.params.id)
     this.props.history.push('./posts')
   };
 
