@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Form, FormGroup, Label, Input, Container } from "reactstrap";
 import "./postcomponent.css";
 import axios from "axios";
+import {withRouter} from 'react-router-dom'
 import Post from "../pages/Post";
 
 class PostComponent extends React.Component {
@@ -58,6 +59,7 @@ class PostComponent extends React.Component {
     e.preventDefault();
     console.log(this.state);
     this.addPost(this.state);
+    this.props.history.push('./posts')
   };
 
   render() {
@@ -113,7 +115,7 @@ class PostComponent extends React.Component {
             />
           </FormGroup>
           <div className='center'>
-            <Button className='center'>Submit</Button>
+            <Button className='centered blue'>Submit</Button>
           </div>
         </Form>
       </Container>
@@ -121,4 +123,4 @@ class PostComponent extends React.Component {
   }
 }
 
-export default PostComponent;
+export default withRouter(PostComponent);

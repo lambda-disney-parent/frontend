@@ -1,5 +1,15 @@
 .pad{
-    padding: 5px;
+    padding: 3px;
+    display: flex;
+}
+
+.left{
+    margin-right: 10px
+}
+
+.smaller{
+    justify-content:center;
+    width: 100px
 }
 
 .wrap{
@@ -29,12 +39,42 @@
 }
 
 .center{
+    text-align:center;
+    padding: 0
+}
+
+.centered{
     text-align:center
 }
 
 input{
     margin-top:20px;
 }
+
+.large{
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: .5px solid silver
+}
+
+.red{
+    background-color:#ff1212;
+    border-color:#ff1212
+}
+
+.red:hover{
+    background-color:#d00404
+}
+
+.light-blue{
+    background-color: rgb(41, 41, 255);
+}
+
+/* .teal{
+    background-color: rgb(76, 178, 222);
+} */
 
 /* .hidden{
     display: none

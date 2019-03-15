@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import image from '../assets/Mickey.jpg'
 import { Card, CardImg, CardBody,
     CardTitle, CardSubtitle, Button, Container, Input, Form } from 'reactstrap';
 import './post.css';
@@ -13,7 +14,7 @@ export default class Post extends Component {
         repliedBy: '',
         post_id:'',
         isEditing: true,
-        commentUpdate: ''
+        id:''
       }
     }
 
@@ -26,9 +27,11 @@ export default class Post extends Component {
       console.log(this.props, 10)
     }
   
-toggle(){
+toggle = (id) => event => {
   this.setState({
-    isEditing: !this.state.isEditing
+    isEditing: !this.state.isEditing,
+    comment: '',
+    id
   })
 }
 
@@ -53,9 +56,9 @@ toggle(){
 
   updateComment = (comment, id) => {
     const token = localStorage.getItem('token')
-    console.log(id, 55)
+    console.log({comment:this.state.comment}, {post_id:this.state.post_id}, 55)
     axios 
-        .put(`https://disney-parent.herokuapp.com/api/posts/comment/${id}`, {comment: this.state.comment, post_id:this.state.post_id},  {headers: {Authorization: token}})
+        .put(`https://disney-parent.herokuapp.com/api/posts/comment/${id}`, {comment: this.state.comment, repliedBy:this.state.repliedBy},  {headers: {Authorization: token}})
         .then(res => {
             this.props.getPosts()
             this.setState({
@@ -72,11 +75,19 @@ toggle(){
         .delete(`https://disney-parent.herokuapp.com/api/posts/comment/${id}`,  {headers: {Authorization: token}})
         .then(res=> {
           window.location.reload();
-            console.log(res)
         })
         .catch(err=> console.log(err));
   }
 
+getPost = (e, id) => {
+  const token = localStorage.getItem('token')
+  axios
+      .get(`https://disney-parent.herokuapp.com/api/posts/${id}`,  {headers: {Authorization: token}})
+      .then(res=> {
+          console.log(res)
+      })
+      .catch(err=> console.log(err));
+    }
 
 deletePost = (e, id) => {
   e.preventDefault();
@@ -92,19 +103,16 @@ deletePost = (e, id) => {
   
   submitHandler = (e) => {
     e.preventDefault()
-    return(
-      <>
-    {this.state.isEditing ? this.addComment(this.state) : this.updateComment(this.state.comment, this.state.post_id)
-    }
-    {!this.state.isEditing ? this.toggle() : null}
-      </>
-    )
-    this.setState({
-      comment: ''
-    })   
-    
-    
-}
+    console.log(this.state.isEditing, this.state.id, this.state.post_id, 10000000)
+
+    console.log(this.state.id, 76)
+
+    this.state.isEditing ? this.addComment(this.state) : this.updateComment(this.state.comment, this.state.id) && this.toggle()
+  
+  
+  
+  }
+
 render(){
   
   const thisId = +localStorage.getItem('userId')
@@ -116,15 +124,18 @@ render(){
       return (
           <Container className="wrap">
             <div>
+
               <Card className="shadow border">
-                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-                <CardBody>
-                  <CardTitle className="strong">Username: {this.props.post.postedBy} </CardTitle>          
-                  <CardSubtitle className='pad'><strong>Date:</strong> {this.props.post.time}</CardSubtitle>
-                  <CardSubtitle className='pad'><strong>Title:</strong> {this.props.post.title}</CardSubtitle>
-                  <CardSubtitle className='pad'><strong>Meeting Place:</strong> We are located at {this.props.post.meetingPlace} with      {this.props.post.numOfKids} children
+             <CardTitle onClick={(e) => this.getPost(e, this.props.post.id)} className='center large'>{this.props.post.title}</CardTitle>
+
+                <CardImg top width="100%" src={image} alt="Card image cap" />
+                <CardBody className='teal'>
+                  <CardTitle className="strong">Username:<span>&nbsp;</span> {this.props.post.postedBy} </CardTitle>          
+                  <CardSubtitle className='pad'><strong>Date: <span>&nbsp;</span></strong> {this.props.post.time}</CardSubtitle>
+                  <CardSubtitle className='pad'><strong>Meeting Place: <span>&nbsp;</span></strong> We are located in {this.props.post.meetingPlace} with      {this.props.post.numOfKids} children
                   </CardSubtitle>
-                  <Form onSubmit={this.submitHandler}>
+                  
+              <Form onSubmit={this.submitHandler}>
                   <CardSubtitle>
                        {this.props.post.comment && this.props.post.comment.map(comment=> {
                          
@@ -132,10 +143,10 @@ render(){
                             <div key={comment.id}>
                             {this.state.isEditing ?
                                   (<div>
-                                <CardSubtitle className='pad'><strong>Comment:</strong>{comment.comment} </CardSubtitle>
-                                {comment.repliedBy === username ? <Button className='smaller' onClick={(e) => this.deleteComment(e, comment.id)}>Delete</Button> : null}
+                                <CardSubtitle className='pad'><strong>Comment: <span>&nbsp;</span></strong>{comment.comment} </CardSubtitle>
+                                {comment.repliedBy === username ? <Button className='smaller blue left' onClick={(e) => this.deleteComment(e, comment.id)}>Delete</Button> : null}
                                 
-                                  {comment.repliedBy === username ? <Button className='smaller' onClick={() => this.toggle()}>Edit </Button> : null}
+                                  {comment.repliedBy === username ? <Button className='smaller blue' onClick={this.toggle(comment.id)}>Edit </Button> : null}
                             
                                   
                                  
@@ -156,16 +167,16 @@ render(){
                       <Input name='comment' value={this.state.comment} onChange={this.handleChange} placeholder= 'Add a comment...'></Input>
                       :
                       <>
-                      <Button onClick={() => this.toggle()}>Undo Edit </Button>
+                      <Button onClick={this.toggle(this.state.comment.id)}>Cancel</Button>
                       <Input name='comment' value={this.state.comment} onChange={this.handleChange} placeholder= 'Edit your comment...'></Input>
                       </>
                   }
 
                     
-                  </Form>
+            </Form>
                  
                 </CardBody>
-                   {this.props.post.user_id === thisId ? <Button onClick={(e) => this.deletePost(e, this.props.post.id)}>Delete Post</Button> : null}
+                   {this.props.post.user_id === thisId ? <Button className='red' onClick={(e) => this.deletePost(e, this.props.post.id)}>Delete Post</Button> : null}
                 </Card>
               </div>
             </Container>
