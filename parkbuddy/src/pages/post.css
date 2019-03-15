@@ -1,4 +1,4 @@
-.bold{
+.pad{
     padding: 5px;
 }
 
@@ -35,3 +35,11 @@
 input{
     margin-top:20px;
 }
+
+/* .hidden{
+    display: none
+}
+
+.hidden:hover{
+    display: block
+} */

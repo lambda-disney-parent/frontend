@@ -11,7 +11,9 @@ export default class Post extends Component {
       this.state={
         comment: '',
         repliedBy: '',
-        post_id:''
+        post_id:'',
+        isEditing: true,
+        commentUpdate: ''
       }
     }
 
@@ -24,7 +26,11 @@ export default class Post extends Component {
       console.log(this.props, 10)
     }
   
-
+toggle(){
+  this.setState({
+    isEditing: !this.state.isEditing
+  })
+}
 
   handleChange = e => {
       this.setState({
@@ -34,9 +40,8 @@ export default class Post extends Component {
 
   addComment = (comment, id, username) => {
     const token = localStorage.getItem('token')
-    console.log(comment, id, username)
     axios 
-        .post('https://disney-parent.herokuapp.com/api/posts/comment', this.state,  {headers: {Authorization: token}})
+        .post('https://disney-parent.herokuapp.com/api/posts/comment', {comment:this.state.comment, repliedBy:this.state.repliedBy, post_id:this.state.post_id},  {headers: {Authorization: token}})
         .then(res => {
             this.props.getPosts()
             this.setState({
@@ -50,9 +55,12 @@ export default class Post extends Component {
     const token = localStorage.getItem('token')
     console.log(id, 55)
     axios 
-        .put(`https://disney-parent.herokuapp.com/api/posts/comment/${id}`, {comment},  {headers: {Authorization: token}})
+        .put(`https://disney-parent.herokuapp.com/api/posts/comment/${id}`, {comment: this.state.comment, post_id:this.state.post_id},  {headers: {Authorization: token}})
         .then(res => {
             this.props.getPosts()
+            this.setState({
+              comment:''
+            })
         })
         .catch(err=> console.log(err))
   }
@@ -84,7 +92,18 @@ deletePost = (e, id) => {
   
   submitHandler = (e) => {
     e.preventDefault()
-   this.addComment(this.state)
+    return(
+      <>
+    {this.state.isEditing ? this.addComment(this.state) : this.updateComment(this.state.comment, this.state.post_id)
+    }
+    {!this.state.isEditing ? this.toggle() : null}
+      </>
+    )
+    this.setState({
+      comment: ''
+    })   
+    
+    
 }
 render(){
   
@@ -101,9 +120,9 @@ render(){
                 <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                 <CardBody>
                   <CardTitle className="strong">Username: {this.props.post.postedBy} </CardTitle>          
-                  <CardSubtitle className='bold'><strong>Date:</strong> {this.props.post.time}</CardSubtitle>
-                  <CardSubtitle className='bold'><strong>Title:</strong> {this.props.post.title}</CardSubtitle>
-                  <CardSubtitle className='bold'><strong>Meeting Place:</strong> We are located at {this.props.post.meetingPlace} with      {this.props.post.numOfKids} children
+                  <CardSubtitle className='pad'><strong>Date:</strong> {this.props.post.time}</CardSubtitle>
+                  <CardSubtitle className='pad'><strong>Title:</strong> {this.props.post.title}</CardSubtitle>
+                  <CardSubtitle className='pad'><strong>Meeting Place:</strong> We are located at {this.props.post.meetingPlace} with      {this.props.post.numOfKids} children
                   </CardSubtitle>
                   <Form onSubmit={this.submitHandler}>
                   <CardSubtitle>
@@ -111,18 +130,38 @@ render(){
                          
                           return(
                             <div key={comment.id}>
-                        <CardSubtitle ><strong>Comment:</strong>{comment.comment}</CardSubtitle>
+                            {this.state.isEditing ?
+                                  (<div>
+                                <CardSubtitle className='pad'><strong>Comment:</strong>{comment.comment} </CardSubtitle>
+                                {comment.repliedBy === username ? <Button className='smaller' onClick={(e) => this.deleteComment(e, comment.id)}>Delete</Button> : null}
+                                
+                                  {comment.repliedBy === username ? <Button className='smaller' onClick={() => this.toggle()}>Edit </Button> : null}
                             
-                            ({comment.repliedBy === username ? <Button onClick={(e) => this.deleteComment(e, comment.id)}>Delete</Button> : null}
-                            {comment.repliedBy === username ? <Button onClick={() => this.updateComment("hello world", comment.id)}>Edit </Button> : null})
-                            
+                                  
+                                 
+                                
+                                  </div>)
+                                  :
+                                  null
+                        }
                             </div>
+                            
                           )
+                          
                       }
                        )}
     
-                  </CardSubtitle>
-                    <Input name='comment' value={this.state.comment} onChange={this.handleChange} placeholder= 'Add a comment...'></Input>
+                  </CardSubtitle> 
+                  {this.state.isEditing ? 
+                      <Input name='comment' value={this.state.comment} onChange={this.handleChange} placeholder= 'Add a comment...'></Input>
+                      :
+                      <>
+                      <Button onClick={() => this.toggle()}>Undo Edit </Button>
+                      <Input name='comment' value={this.state.comment} onChange={this.handleChange} placeholder= 'Edit your comment...'></Input>
+                      </>
+                  }
+
+                    
                   </Form>
                  
                 </CardBody>
